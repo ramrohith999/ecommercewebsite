@@ -17,9 +17,18 @@ const closeModal = document.querySelector(".close-modal");
 const closeBuyModal = document.querySelector(".close-buy-modal");
 const btnBuy = document.querySelector(".btn-buy");
 const totalBuyPrice = document.querySelector(".total-Buy-Price");
+const wisher = document.querySelector(".wish-card");
+//const wishercontent= document.querySelector(".card");
+//const closewisher= document.querySelector(".closewish");
+const wishbtn=document.querySelector(".wish-btn");
+const wishcontent=document.querySelector(".card");
+
+
+
 
 //cart products
 let cart = [];
+let wish=[];
 // let itemNo = 1;
 
 //products class
@@ -59,6 +68,9 @@ class UserInterface {
                 <div class="img-container">
                     <img src=${element.url} alt="product" class="product-img">
                     <button class="bag-btn" data-id=${element.id}><i class="fas fa-shopping-cart"></i>Add To Cart</button>
+                    <br/>
+                    <button class="wish-btn" data-id=${element.id} onclick="wishdisplay()><i class="fas fa-heart"></i>Add To Wishlist</button>
+
                     <p>${element.title}</p>
                 </div>
                 <div>
@@ -73,7 +85,27 @@ class UserInterface {
     });
     productDom.innerHTML = result;
   }
-
+  /**/
+  wishdisplay(){
+  display=
+    
+    `
+    <div class="wishcard">
+    <div class="card">
+        <span class="closewish">
+            <i class="fas fa-window-close"></i>
+        </span>
+        <h2>This item has been added to your wishlist</h2>
+        <br/>
+        <br/>
+        <h3>Thank you for shopping with us !</h3>
+    
+    </div>
+    
+    </div>
+    `;
+    }
+    /**/
   addCartItems(cart) {
     let cartHtml = "";
     cart.forEach((cartItem) => {
@@ -94,6 +126,26 @@ class UserInterface {
     });
     cartDom.innerHTML = cartHtml;
   }
+  /*
+addwishlist(){
+  let wishhtml="";
+  wishhtml+=`<div class="wishcard">
+    <div class="card">
+        <span class="closewish">
+            <i class="fas fa-window-close"></i>
+        </span>
+        <h2>This item has been added to your wishlist</h2>
+        <br/>
+        <br/>
+        <h3>Thank you for shopping with us !</h3>
+    </div>
+    
+    </div>
+    
+    `;
+wishdom.innerHTML=wishhtml;
+}
+  */
 
   setCartValues(cart) {
     let totalPrice = 0;
@@ -167,6 +219,23 @@ class UserInterface {
       });
     });
   }
+
+  getwishbuttons(){
+    let btns=[...document.querySelectorAll(".wish-btn")];
+    console.log(btns);
+    btns.forEach((wishbtn)=>{
+      let inwishlist=wish.find((items)=>items.id===id);
+      if(inwishlist){
+        wishbtn.innerHTML="Wishlisted";
+        wishbtn.disabled=true;
+      }
+      wishbtn.addEventListener("click",(eventee)=>{
+        eventee.target.innerHTML="Wishlisted";
+        eventee.target.disabled = true;
+      });
+    });
+  }
+  /**/
 
   cartFuntionality() {
     cartDom.addEventListener("click", (event) => {
@@ -251,7 +320,32 @@ class UserInterface {
     buyContent.innerHTML = cartHtml;
     totalBuyPrice.innerHTML = totalPrice;
   }
+
+  addwishToModel(wish){
+    let wishHtml = "";
+    wish.forEach((wishitem) => {
+      wishHtml += `<div class="wishcard">
+      <div class="card">
+          <span class="closewish">
+              <i class="fas fa-window-close"></i>
+          </span>
+          <h2>This item has been added to your wishlist</h2>
+          <h4>${wishitem.title}</h4>
+  
+          <br/>
+          <br/>
+          <h3>Thank you for shopping with us !</h3>
+      </div>
+      
+      </div>
+      
+          `;
+    });
+    wishcontent.innerHTML = wishHtml;
+  }
 }
+/**/
+
 
 //storage class
 class Storage {
@@ -314,6 +408,7 @@ btnBuy.onclick = () => {
   ui.clearCart()
   buyModal.style.display = "block";
 }
+
 
 closeBuyModal.onclick = () => {
   buyModal.style.display = "none";
@@ -387,3 +482,26 @@ window.onclick = function(event) {
 // }
 
 // import {getProducts} from './'
+/*
+wisher="";
+wishdisplay(){
+wisher+=
+
+`
+<div class="wishcard">
+<div class="card">
+    <span class="closewish">
+        <i class="fas fa-window-close"></i>
+    </span>
+    <h2>This item has been added to your wishlist</h2>
+    <br/>
+    <br/>
+    <h3>Thank you for shopping with us !</h3>
+
+</div>
+
+</div>
+`;
+}
+*/
+
